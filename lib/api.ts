@@ -13,14 +13,17 @@ const API_BASE_URL =
  */
 export async function getCrops(): Promise<string[]> {
   try {
+    console.log("[v0] Fetching crops from:", `${API_BASE_URL}/api/crops`);
     const response = await fetch(`${API_BASE_URL}/api/crops`);
+    console.log("[v0] Crops response status:", response.status);
     if (!response.ok) {
       throw new Error(`Failed to fetch crops: ${response.statusText}`);
     }
     const data: CropsResponse = await response.json();
+    console.log("[v0] Crops fetched successfully:", data.crops);
     return data.crops;
   } catch (error) {
-    console.error('Error fetching crops:', error);
+    console.error('[v0] Error fetching crops:', error);
     throw error;
   }
 }

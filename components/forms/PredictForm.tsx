@@ -37,10 +37,13 @@ export function PredictForm({ onSubmit, isLoading, error }: PredictFormProps) {
   useEffect(() => {
     const loadCrops = async () => {
       try {
+        console.log("[v0] Starting to load crops...");
         const cropList = await getCrops();
+        console.log("[v0] Crops loaded in component:", cropList);
         setCrops(cropList);
       } catch (err) {
-        console.error('Error loading crops:', err);
+        console.error('[v0] Error loading crops:', err);
+        setCrops([]);
       } finally {
         setCropsLoading(false);
       }
