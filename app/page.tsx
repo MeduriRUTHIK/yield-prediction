@@ -1,26 +1,31 @@
+'use client';
+
 import Link from 'next/link';
 import { Cloud, Database, TrendingUp } from 'lucide-react';
+import { useLanguage } from '@/lib/contexts/LanguageContext';
 
 export default function Home() {
+  const { t } = useLanguage();
+
   const features = [
     {
       icon: Cloud,
-      title: 'NASA POWER',
-      description: 'Real-time weather data including temperature, rainfall, and humidity patterns for accurate predictions.',
+      title: t.home.nasaCard.title,
+      description: t.home.nasaCard.description,
       color: 'bg-blue-50 text-blue-600',
       iconBg: 'bg-blue-600',
     },
     {
       icon: Database,
-      title: 'SoilGrids',
-      description: 'Global soil property database providing detailed soil pH and composition data by location.',
+      title: t.home.soilgridsCard.title,
+      description: t.home.soilgridsCard.description,
       color: 'bg-orange-50 text-orange-600',
       iconBg: 'bg-orange-600',
     },
     {
       icon: TrendingUp,
-      title: 'FAOSTAT',
-      description: 'Historical agricultural yield data used to train our machine learning model for accurate predictions.',
+      title: t.home.faofatCard.title,
+      description: t.home.faofatCard.description,
       color: 'bg-green-50 text-green-600',
       iconBg: 'bg-green-600',
     },
@@ -32,16 +37,16 @@ export default function Home() {
       <section className="bg-gradient-to-br from-green-50 via-blue-50 to-orange-50 py-16 md:py-24 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 text-balance">
-            Predict Crop Yield with AI
+            {t.home.title}
           </h1>
           <p className="text-lg md:text-xl text-gray-600 mb-8 text-balance">
-            Harness the power of satellite weather data, soil analysis, and machine learning to forecast agricultural yields with precision.
+            {t.home.subtitle}
           </p>
           <Link
             href="/predict"
             className="inline-block bg-green-600 hover:bg-green-700 text-white font-semibold py-4 px-8 rounded-lg transition shadow-lg hover:shadow-xl"
           >
-            Start Predicting
+            {t.home.button}
           </Link>
         </div>
       </section>
@@ -49,7 +54,7 @@ export default function Home() {
       {/* Features Section */}
       <section className="max-w-7xl mx-auto px-4 py-16 md:py-24">
         <h2 className="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-12">
-          Powered by Global Data
+          {t.home.subtitle}
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

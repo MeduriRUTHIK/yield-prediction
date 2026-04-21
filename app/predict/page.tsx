@@ -6,8 +6,10 @@ import { ResultCards, WeatherCard, SoilCard } from '@/components/results/ResultC
 import { YieldComparisonChart, FeatureImportanceChart } from '@/components/results/Charts';
 import { LoadingSpinner } from '@/components/common/LoadingSpinner';
 import { PredictionResult } from '@/lib/types';
+import { useLanguage } from '@/lib/contexts/LanguageContext';
 
 export default function PredictPage() {
+  const { t } = useLanguage();
   const [result, setResult] = useState<PredictionResult | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -53,10 +55,10 @@ export default function PredictPage() {
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Crop Yield Prediction
+            {t.predict.title}
           </h1>
           <p className="text-lg text-gray-600">
-            Enter your location and crop details to get an AI-powered yield forecast
+            {t.predict.form.submit}
           </p>
         </div>
 

@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { getCrops, predictYield } from '@/lib/api';
 import { PredictionRequest, PredictionResult } from '@/lib/types';
 import { AlertCircle, Loader2 } from 'lucide-react';
+import { useLanguage } from '@/lib/contexts/LanguageContext';
 
 interface PredictFormProps {
   onSubmit: (result: PredictionResult) => void;
@@ -21,6 +22,7 @@ interface FormData {
 }
 
 export function PredictForm({ onSubmit, isLoading, error }: PredictFormProps) {
+  const { t } = useLanguage();
   const [crops, setCrops] = useState<string[]>([]);
   const [cropsLoading, setCropsLoading] = useState(true);
   const { register, handleSubmit, formState: { errors }, watch } = useForm<FormData>({
@@ -72,7 +74,7 @@ export function PredictForm({ onSubmit, isLoading, error }: PredictFormProps) {
 
   return (
     <form onSubmit={handleSubmit(onFormSubmit)} className="bg-white rounded-xl shadow-lg p-8 max-w-2xl mx-auto">
-      <h2 className="text-2xl font-bold text-gray-900 mb-6">Crop Yield Prediction Form</h2>
+      <h2 className="text-2xl font-bold text-gray-900 mb-6">{t.predict.title}</h2>
 
       {error && (
         <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6 flex gap-3">
@@ -85,10 +87,10 @@ export function PredictForm({ onSubmit, isLoading, error }: PredictFormProps) {
         {/* Crop Dropdown */}
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-2">
-            Crop <span className="text-red-500">*</span>
+            {t.predict.form.crop} <span className="text-red-500">*</span>
           </label>
           <select
-            {...register('crop', { required: 'Crop is required' })}
+            {...register('crop', { required: t.predict.form.crop })}
             disabled={cropsLoading || isLoading}
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
           >
@@ -107,15 +109,15 @@ export function PredictForm({ onSubmit, isLoading, error }: PredictFormProps) {
         {/* Season Dropdown */}
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-2">
-            Season <span className="text-red-500">*</span>
+            {t.predict.form.season} <span className="text-red-500">*</span>
           </label>
           <select
-            {...register('season', { required: 'Season is required' })}
+            {...register('season', { required: t.predict.form.season })}
             disabled={isLoading}
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
           >
-            <option value="Kharif">Kharif (Monsoon)</option>
-            <option value="Rabi">Rabi (Winter)</option>
+            <option value="Kharif">Kharif</option>
+            <option value="Rabi">Rabi</option>
           </select>
           {errors.season && (
             <p className="text-red-600 text-sm mt-1">{errors.season.message}</p>
@@ -126,17 +128,17 @@ export function PredictForm({ onSubmit, isLoading, error }: PredictFormProps) {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-2">
-              Latitude <span className="text-red-500">*</span>
+              {t.predict.form.latitude} <span className="text-red-500">*</span>
             </label>
             <input
               type="number"
               step="any"
               placeholder="e.g., 17.3850"
               {...register('latitude', {
-                required: 'Latitude is required',
+                required: t.predict.form.latitude,
                 pattern: {
                   value: /^-?[0-9]+\.?[0-9]*$/,
-                  message: 'Invalid latitude',
+                  message: t.predict.form.latitude,
                 },
               })}
               disabled={isLoading}
@@ -149,17 +151,17 @@ export function PredictForm({ onSubmit, isLoading, error }: PredictFormProps) {
 
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-2">
-              Longitude <span className="text-red-500">*</span>
+              {t.predict.form.longitude} <span className="text-red-500">*</span>
             </label>
             <input
               type="number"
               step="any"
               placeholder="e.g., 78.4867"
               {...register('longitude', {
-                required: 'Longitude is required',
+                required: t.predict.form.longitude,
                 pattern: {
                   value: /^-?[0-9]+\.?[0-9]*$/,
-                  message: 'Invalid longitude',
+                  message: t.predict.form.longitude,
                 },
               })}
               disabled={isLoading}
@@ -174,17 +176,17 @@ export function PredictForm({ onSubmit, isLoading, error }: PredictFormProps) {
         {/* Year Input */}
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-2">
-            Year <span className="text-red-500">*</span>
+            {t.predict.form.year} <span className="text-red-500">*</span>
           </label>
           <input
             type="number"
             min="2000"
             max="2100"
             {...register('year', {
-              required: 'Year is required',
+              required: t.predict.form.year,
               pattern: {
                 value: /^[0-9]{4}$/,
-                message: 'Enter a valid year',
+                message: t.predict.form.year,
               },
             })}
             disabled={isLoading}
@@ -198,7 +200,7 @@ export function PredictForm({ onSubmit, isLoading, error }: PredictFormProps) {
         {/* Country (Info only) */}
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-2">
-            Country
+            {t.predict.form.country}
           </label>
           <input
             type="text"
@@ -216,7 +218,7 @@ export function PredictForm({ onSubmit, isLoading, error }: PredictFormProps) {
           className="w-full bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white font-semibold py-3 rounded-lg transition flex items-center justify-center gap-2"
         >
           {isLoading && <Loader2 className="w-5 h-5 animate-spin" />}
-          {isLoading ? 'Predicting...' : 'Predict Yield'}
+          {isLoading ? t.predict.form.loading : t.predict.form.submit}
         </button>
       </div>
     </form>

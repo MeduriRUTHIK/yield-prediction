@@ -1,6 +1,9 @@
 'use client';
 
+import { useLanguage } from '@/lib/contexts/LanguageContext';
+
 export function Footer() {
+  const { t } = useLanguage();
   const currentYear = new Date().getFullYear();
 
   return (
@@ -65,7 +68,7 @@ export function Footer() {
 
         <div className="border-t border-gray-200 pt-8">
           <p className="text-center text-sm text-gray-600">
-            © {currentYear} YieldPredict. All rights reserved. Powered by AI and open data.
+            © {currentYear} {t.footer.poweredBy}
           </p>
         </div>
       </div>
